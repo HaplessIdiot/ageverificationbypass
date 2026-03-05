@@ -1,6 +1,8 @@
 AgeVerificationBypass (AVB)
-"The Sanctuary Protocol for Sovereign Systems"
-"Why do I need to provide an ID to log into a Linux VM? This is not appropriate." — HaplessIdiot
+
+The Sanctuary Protocol for Sovereign Systems
+
+Why do I need to provide an ID to log into a Linux VM? This is not appropriate.
 
 🚨 The Problem: The Archon Age-Gate
 As of 2026/2027, major distributions (Ubuntu and Fedora) have begun integrating the org.freedesktop.AgeVerification1 D-Bus standard. Under the guise of "Safety Compliance" (AB 1043 / Brazil Digital ECA), your Operating System is now being tasked with acting as a Digital Parole Officer.
@@ -27,7 +29,7 @@ Workstation Optimization: Designed for high-performance builds (like the 5800X3D
 🗣 Why We Fight
 The "Measured Silence" of corporate developers is the blueprint for our digital cages. We believe that an Operating System belongs to the user, not the state. Whether you are a cybersecurity professional, a gamer, or a sysadmin running headless nodes in Cahokia Heights, you deserve a system that doesn't demand your papers to run a sudo command.
 
-"The true hand is shown. The nonprofit mask is slipping. I bypassed RedHat D-Bus and survived the permafrost."
+The true hand is shown. The nonprofit mask is slipping. I bypassed RedHat D-Bus and survived the permafrost on telegram staff unfroze me and wished me good luck.
 
 📜 Disclaimer
 This tool is for educational and system-hardening purposes. By using this script, you are asserting your right to digital privacy and the sovereignty of your own hardware.
