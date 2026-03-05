@@ -12,7 +12,7 @@ Headless/SSH Failure: How do you verify an ID over a remote SSH terminal with no
 
 VM & CI/CD Paralysis: Automated environments, GitHub Actions, and Virtual Machines are becoming "unusable" because they require a biometric or ID token to complete a simple boot/login sequence.
 
-De-Anonymization: Your local Linux account—historically a private space—is now being tied to state-issued identification at the system level.
+De-Anonymization: Your local Linux account, historically a private space, is now being tied to state-issued identification at the system level.
 
 🛠 The Solution: The Sanctuary Ripper
 This repository provides a prototype bypass designed to be executed via Live USB or Post-Install script to surgically remove the compliance hooks from your system before the permafrost sets in.
