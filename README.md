@@ -1,0 +1,35 @@
+AgeVerificationBypass (AVB)
+"The Sanctuary Protocol for Sovereign Systems"
+"Why do I need to provide an ID to log into a Linux VM? This is not appropriate." — HaplessIdiot
+
+🚨 The Problem: The Archon Age-Gate
+As of 2026/2027, major distributions (Ubuntu and Fedora) have begun integrating the org.freedesktop.AgeVerification1 D-Bus standard. Under the guise of "Safety Compliance" (AB 1043 / Brazil Digital ECA), your Operating System is now being tasked with acting as a Digital Parole Officer.
+
+The Fallout:
+Headless/SSH Failure: How do you verify an ID over a remote SSH terminal with no screen? You can't. You're locked out of your own infrastructure.
+
+VM & CI/CD Paralysis: Automated environments, GitHub Actions, and Virtual Machines are becoming "unusable" because they require a biometric or ID token to complete a simple boot/login sequence.
+
+De-Anonymization: Your local Linux account—historically a private space—is now being tied to state-issued identification at the system level.
+
+🛠 The Solution: The Sanctuary Ripper
+This repository provides a prototype bypass designed to be executed via Live USB or Post-Install script to surgically remove the compliance hooks from your system before the permafrost sets in.
+
+Features:
+D-Bus Decapitation: Masks the org.freedesktop.AgeVerification1 service so apps can't "snitch" on your age.
+
+Null-State /etc/age: Removes the tracking file and replaces it with an immutable null-link.
+
+Sovereign Identity: Returns a "Verified Adult" status to any querying application without ever touching a piece of ID.
+
+Workstation Optimization: Designed for high-performance builds (like the 5800X3D) that can't afford the telemetry overhead.
+
+🗣 Why We Fight
+The "Measured Silence" of corporate developers is the blueprint for our digital cages. We believe that an Operating System belongs to the user, not the state. Whether you are a cybersecurity professional, a gamer, or a sysadmin running headless nodes in Cahokia Heights, you deserve a system that doesn't demand your papers to run a sudo command.
+
+"The true hand is shown. The nonprofit mask is slipping. I bypassed RedHat D-Bus and survived the permafrost."
+
+📜 Disclaimer
+This tool is for educational and system-hardening purposes. By using this script, you are asserting your right to digital privacy and the sovereignty of your own hardware.
+
+The Star is infinite. The lobby is anarchy. Wake up, Future Crew.
