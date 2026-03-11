@@ -26,7 +26,7 @@ Sovereign Identity: Returns a "Verified Adult" status to any querying applicatio
 
 Workstation Optimization: Designed for high-performance builds (like the 5800X3D) that can't afford the telemetry overhead.
 
-🗣 Why We Fight
+🗣 Why We Fight:
 The "Measured Silence" of corporate developers is the blueprint for our digital cages. We believe that an Operating System belongs to the user, not the state. Whether you are a cybersecurity professional, a gamer, or a sysadmin running headless nodes in Cahokia Heights, you deserve a system that doesn't demand your papers to run a sudo command.
 
 The true hand is shown. The nonprofit mask is slipping. I bypassed RedHat D-Bus and survived the permafrost on telegram staff unfroze me and wished me good luck.
