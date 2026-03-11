@@ -18,7 +18,7 @@ De-Anonymization: Your local Linux account, historically a private space, is now
 This repository provides a prototype bypass designed to be executed via Live USB or Post-Install script to surgically remove the compliance hooks from your system before the permafrost sets in.
 
 Features:
-D-Bus Decapitation: Masks the org.freedesktop.AgeVerification1 service so apps can't "snitch" on your age.
+D-Bus Decapitation: Masks the org.freedesktop.AgeVerification service so apps can't "snitch" on your age.
 
 Null-State /etc/age: Removes the tracking file and replaces it with an immutable null-link.
 
@@ -35,3 +35,5 @@ The true hand is shown. The nonprofit mask is slipping. I bypassed RedHat D-Bus 
 This tool is for educational and system-hardening purposes. By using this script, you are asserting your right to digital privacy and the sovereignty of your own hardware.
 
 The Star is infinite. The lobby is anarchy. Wake up, Future Crew.
+
+Thanks for the feature SomeOrdinaryGamers! Much love been watching you since you played Ao Oni and LSD dream emulator along AzuriteReaction miss that era! https://youtu.be/1podbTImtq8?t=1172
