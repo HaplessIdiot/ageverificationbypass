@@ -36,7 +36,7 @@ This tool is for educational and system-hardening purposes. By using this script
 
 The Star is infinite. The lobby is anarchy. Wake up, Future Crew.
 
-Thanks for the feature SomeOrdinaryGamers! Much love been watching you since you played Ao Oni and LSD dream emulator along AzuriteReaction miss that era! https://youtu.be/1podbTImtq8?t=1172
+Thanks for the feature SomeOrdinaryGamers! Much love been watching you since they played Ao Oni and LSD dream emulator along AzuriteReaction miss that era! https://youtu.be/1podbTImtq8?t=1172
 
 ## Requirements
 
@@ -56,3 +56,21 @@ D-Bus, then exits. Re-run without sudo to start the bypass service:
 
 Everything is self-contained in a single file. No separate config
 files need to be copied or managed.
+
+## Tools
+
+  `tools/sonicd-age-toggle.sh` — shell script to toggle bypassAgeVerification on a user record and optionally invoke the D-Bus bypass layer. Integrates with sonicd
+
+    # show current state
+    ./tools/sonicd-age-toggle.sh status
+
+    # enable bypass (default, birthDate hidden)
+    sudo ./tools/sonicd-age-toggle.sh on
+
+    # temporarily expose a spoofed 1970-01-01 date to satisfy a service
+    sudo ./tools/sonicd-age-toggle.sh spoof
+
+    # restore bypass when done
+    sudo ./tools/sonicd-age-toggle.sh restore
+
+  Set AVB_SCRIPT=/path/to/bypassageverification.py to point at your local copy of the D-Bus bypass script.
