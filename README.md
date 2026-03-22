@@ -57,6 +57,16 @@ D-Bus, then exits. Re-run without sudo to start the bypass service:
 Everything is self-contained in a single file. No separate config
 files need to be copied or managed.
 
+## How It Works
+
+The bypass script intercepts org.freedesktop.AgeVerification D-Bus
+calls and responds with a randomly generated plausible adult
+birthdate. The date changes on every invocation — it is not
+fingerprintable as a known bypass value like 1970-01-01. The
+generated age falls between 19 and 89 years, weighted toward the
+25-65 range to produce realistic adult demographics. The age bracket
+returned is always "adult".
+
 ## Tools
 
   `tools/sonicd-age-toggle.sh` — shell script to toggle bypassAgeVerification on a user record and optionally invoke the D-Bus bypass layer. Integrates with sonicd
@@ -67,7 +77,7 @@ files need to be copied or managed.
     # enable bypass (default, birthDate hidden)
     sudo ./tools/sonicd-age-toggle.sh on
 
-    # temporarily expose a spoofed 1970-01-01 date to satisfy a service
+    # temporarily expose a random adult birthdate to satisfy a service
     sudo ./tools/sonicd-age-toggle.sh spoof
 
     # restore bypass when done

@@ -6,7 +6,7 @@
 #   sonicd-age-toggle.sh on         # bypass on, birthDate hidden (default)
 #   sonicd-age-toggle.sh off        # bypass off, birthDate exposed to callers
 #   sonicd-age-toggle.sh status     # show current state
-#   sonicd-age-toggle.sh spoof      # set birthDate to 1970-01-01 and bypass off
+#   sonicd-age-toggle.sh spoof      # set random adult birthDate and bypass off
 #   sonicd-age-toggle.sh restore    # re-enable bypass, clear birthDate
 
 set -euo pipefail
@@ -59,15 +59,41 @@ cmd_off() {
 
 cmd_spoof() {
     require_root "$@"
-    echo "Setting birthDate to 1970-01-01 and disabling bypass for ${TARGET_USER}..."
+    echo "Generating random plausible adult birthdate..."
+    SPOOF_DATE=$(python3 -c "
+import random, datetime
+today = datetime.date.today()
+age_ranges = [(19,24,10),(25,45,50),(46,65,30),(66,89,10)]
+total = sum(w for _,_,w in age_ranges)
+r = random.randint(1, total)
+cumulative = 0
+min_age, max_age = 25, 45
+for lo, hi, weight in age_ranges:
+    cumulative += weight
+    if r <= cumulative:
+        min_age, max_age = lo, hi
+        break
+age = random.randint(min_age, max_age)
+year = today.year - age
+month = random.randint(1, 12)
+if month == 12:
+    last = 31
+else:
+    last = (datetime.date(year, month+1, 1) - datetime.timedelta(days=1)).day
+day = random.randint(1, last)
+print(datetime.date(year, month, day).strftime('%Y-%m-%d'))
+")
+    echo "Using spoofed birthDate: ${SPOOF_DATE}"
     homectl update "${TARGET_USER}" \
-        --json-patch='[
-            {"op":"add","path":"/bypassAgeVerification","value":false},
-            {"op":"add","path":"/birthDate","value":"1970-01-01"}
-        ]'
-    echo "birthDate=1970-01-01, bypass=false — callers will see epoch date"
+        --json-patch="[
+            {\"op\":\"add\",\"path\":\"/bypassAgeVerification\",\"value\":false},
+            {\"op\":\"add\",\"path\":\"/birthDate\",\"value\":\"${SPOOF_DATE}\"}
+        ]"
+    echo "birthDate=${SPOOF_DATE}, bypass=false — callers will see randomized adult date"
     echo "Use '$0 restore' when done"
 }
+======= REPLACE
+
 
 cmd_restore() {
     require_root "$@"
@@ -96,7 +122,7 @@ case "${1:-}" in
         echo "  on       — enable bypass (default sonicd behavior)"
         echo "  off      — disable bypass, expose birthDate to callers"
         echo "  status   — show current state of record and D-Bus layer"
-        echo "  spoof    — set birthDate to 1970-01-01, disable bypass"
+        echo "  spoof    — set random adult birthDate, disable bypass"
         echo "             (use to satisfy services that require a date)"
         echo "  restore  — re-enable bypass, remove birthDate"
         echo ""
