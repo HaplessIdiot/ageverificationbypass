@@ -37,3 +37,22 @@ This tool is for educational and system-hardening purposes. By using this script
 The Star is infinite. The lobby is anarchy. Wake up, Future Crew.
 
 Thanks for the feature SomeOrdinaryGamers! Much love been watching you since you played Ao Oni and LSD dream emulator along AzuriteReaction miss that era! https://youtu.be/1podbTImtq8?t=1172
+
+## Requirements
+
+python3-dbus is required:
+  apt install python3-dbus        # Devuan
+  pacman -S python-dbus           # Artix/Garuda
+  dnf install python3-dbus        # OpenMandriva
+
+## Usage
+
+First run — installs the D-Bus policy file automatically:
+  sudo python3 bypassageverification.py
+
+The script writes the policy to /etc/dbus-1/system.d/ and reloads
+D-Bus, then exits. Re-run without sudo to start the bypass service:
+  python3 bypassageverification.py
+
+Everything is self-contained in a single file. No separate config
+files need to be copied or managed.

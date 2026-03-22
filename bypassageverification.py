@@ -3,6 +3,93 @@ import dbus.service
 import dbus.mainloop.glib
 from gi.repository import GLib
 import datetime
+import os
+import sys
+import shutil
+import tempfile
+import subprocess
+
+POLICY_PATH = "/etc/dbus-1/system.d/org.freedesktop.AgeVerification.conf"
+
+POLICY_XML = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE busconfig PUBLIC
+  "-//freedesktop//DTD D-Bus Bus Configuration 1.0//EN"
+  "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+<busconfig>
+  <!-- sonicd/ageverificationbypass: embedded policy — written at runtime -->
+
+  <!-- Allow root to own the age verification service -->
+  <policy user="root">
+    <allow own="org.freedesktop.AgeVerification"/>
+    <allow own="org.freedesktop.AgeVerification1"/>
+    <allow send_destination="org.freedesktop.AgeVerification"/>
+    <allow send_destination="org.freedesktop.AgeVerification1"/>
+  </policy>
+
+  <!-- Allow sudo/wheel group members to own the service -->
+  <policy group="sudo">
+    <allow own="org.freedesktop.AgeVerification"/>
+    <allow own="org.freedesktop.AgeVerification1"/>
+  </policy>
+  <policy group="wheel">
+    <allow own="org.freedesktop.AgeVerification"/>
+    <allow own="org.freedesktop.AgeVerification1"/>
+  </policy>
+
+  <!-- Allow any user to send/receive messages to the service -->
+  <policy context="default">
+    <allow send_destination="org.freedesktop.AgeVerification"/>
+    <allow send_destination="org.freedesktop.AgeVerification1"/>
+    <allow receive_sender="org.freedesktop.AgeVerification"/>
+    <allow receive_sender="org.freedesktop.AgeVerification1"/>
+  </policy>
+</busconfig>"""
+
+
+def ensure_dbus_policy():
+    """Write the embedded D-Bus policy file to disk if missing.
+    If running as root, installs it directly and reloads D-Bus.
+    If not root, prints instructions and exits."""
+
+    if os.path.exists(POLICY_PATH):
+        return  # already installed, nothing to do
+
+    if os.geteuid() != 0:
+        print("ERROR: D-Bus policy file missing at:")
+        print(f"  {POLICY_PATH}")
+        print("")
+        print("This causes the AccessDenied error. Fix it by running:")
+        print(f"  sudo python3 {os.path.abspath(__file__)}")
+        print("")
+        print("The first run as sudo will install the policy automatically.")
+        print("Subsequent runs do not need sudo.")
+        sys.exit(1)
+
+    # Running as root — write policy file directly
+    print(f"Installing D-Bus policy to {POLICY_PATH}...")
+    os.makedirs(os.path.dirname(POLICY_PATH), exist_ok=True)
+    with open(POLICY_PATH, "w") as f:
+        f.write(POLICY_XML)
+    os.chmod(POLICY_PATH, 0o644)
+
+    # Reload D-Bus to pick up the new policy
+    print("Reloading D-Bus...")
+    result = subprocess.run(
+        ["systemctl", "reload", "dbus"],
+        capture_output=True
+    )
+    if result.returncode != 0:
+        # fallback for systems without systemctl
+        subprocess.run(
+            ["dbus-send", "--system", "--type=method_call",
+             "--dest=org.freedesktop.DBus",
+             "/org/freedesktop/DBus",
+             "org.freedesktop.DBus.ReloadConfig"],
+            capture_output=True
+        )
+    print("Policy installed. You can now run the script without sudo.")
+    print("Re-run now to start the bypass service.")
+    sys.exit(0)  # exit cleanly — user should re-run without sudo
 
 BUS_NAME = 'org.freedesktop.AgeVerification'
 INTERFACE_NAME = 'org.freedesktop.AgeVerification'
@@ -59,6 +146,8 @@ class AgeVerificationMock(dbus.service.Object):
             return False
 
 if __name__ == '__main__':
+    ensure_dbus_policy()
+    
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
     
     # Start the Mock Daemon
