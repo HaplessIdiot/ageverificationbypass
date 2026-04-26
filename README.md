@@ -41,9 +41,9 @@ Thanks for the feature SomeOrdinaryGamers! Much love been watching you since the
 ## Requirements
 
 python3-dbus is required:
-  apt install python3-dbus        # Devuan
-  pacman -S python-dbus           # Artix/Garuda
-  dnf install python3-dbus        # OpenMandriva
+ - apt install python3-dbus        # Devuan
+ - pacman -S python-dbus           # Artix/Garuda
+ - dnf install python3-dbus        # OpenMandriva
 
 ## Usage
 
